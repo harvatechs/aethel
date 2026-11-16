@@ -8,7 +8,8 @@ type = layers
 layers =
     (aethel_codex.cli)
     (aethel_codex.explain) | (aethel_codex.selftest)
-    (aethel_codex.verify) | (aethel_codex.proof) | (aethel_codex.publish)
+    (aethel_codex.publish)
+    (aethel_codex.verify) | (aethel_codex.proof)
     (aethel_codex.report)
     (aethel_codex.bundle) | (aethel_codex.keyfile)
     (aethel_codex.limits)

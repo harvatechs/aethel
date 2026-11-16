@@ -28,6 +28,7 @@ PT1_MODULES = {
     "keyfile.py",
     "verify.py",
     "report.py",
+    "publish.py",
 }
 
 
