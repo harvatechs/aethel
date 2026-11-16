@@ -18,11 +18,12 @@ SIG_CONTEXT = b"pip1.sig"
 CHUNK_SIZE = 4096
 UNICODE_VERSION = "18.0.0"
 
-# Maximum length for value text fields in bytes (YP §7.4, specs.md §2)
+# Maximum length for value text fields in bytes (YP §7.4, specs.md §2, §12)
 MAX_TITLE_BYTES = 512
 MAX_LICENSE_BYTES = 256
 MAX_ASSET_NAME_BYTES = 128
 MAX_BEACON_VALUE_BYTES = 64
+MAX_ENVELOPE_BYTES = 65536
 
 # Profile and Magics
 PROFILE_PIP1 = "pip-1"
