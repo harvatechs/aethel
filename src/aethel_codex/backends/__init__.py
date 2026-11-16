@@ -14,6 +14,8 @@ _BACKENDS_BY_ID: dict[int, SignatureBackend] = {
 
 _BACKENDS_BY_NAME: dict[str, SignatureBackend] = {b.name: b for b in _BACKENDS_BY_ID.values()}
 
+__all__ = ["SignatureBackend", "get_backend"]
+
 
 def get_backend(alg: int | str) -> SignatureBackend:
     """Retrieve cryptographic signature backend by algorithm ID (int) or name (str).
