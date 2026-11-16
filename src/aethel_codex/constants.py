@@ -1,5 +1,6 @@
 """Protocol constants, labels, and parameters (PIP-1, YP §0, §2, §3, §7)."""
 
+import re
 from dataclasses import dataclass
 
 # Domain-separation hash labels (YP §3.4)
@@ -105,3 +106,18 @@ ROLES: dict[int, str] = {
 }
 
 ROLE_BY_NAME: dict[str, int] = {name: code for code, name in ROLES.items()}
+
+# Tool metadata
+TOOL_NAME = "aethel"
+TOOL_VERSION = "0.1.0"
+TOOL_PROFILE = "pip-1"
+YELLOW_PAPER_VERSION = "1.0.0-rc.3"
+
+# Standing notes (docs/cli-spec.md §4, specs.md §9)
+STANDING_NOTE_SIGNATURE = (
+    "A valid signature shows that the holder of a key approved this manifest. "
+    "It does not show who that person is."
+)
+STANDING_NOTE_TIME = "PIP-1 never produces a time value of its own."
+
+ASSET_NAME_RE = re.compile(r"(?!\.{1,2}\Z)[A-Za-z0-9._-]{1,128}")

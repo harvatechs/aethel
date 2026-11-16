@@ -1,0 +1,116 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://aethel.dev/schemas/verify-v1.json",
+  "title": "AethelVerifyReport",
+  "type": "object",
+  "required": [
+    "schema",
+    "tool",
+    "bundle",
+    "integrity",
+    "attribution",
+    "history",
+    "time",
+    "checks",
+    "warnings",
+    "notes"
+  ],
+  "properties": {
+    "schema": {
+      "type": "string",
+      "const": "aethel.verify/1"
+    },
+    "tool": {
+      "type": "object",
+      "required": ["name", "version", "profile", "yellow_paper"],
+      "properties": {
+        "name": {"type": "string"},
+        "version": {"type": "string"},
+        "profile": {"type": "string"},
+        "yellow_paper": {"type": "string"}
+      }
+    },
+    "bundle": {
+      "type": "object",
+      "required": ["path", "manifest_id", "work_id"],
+      "properties": {
+        "path": {"type": "string"},
+        "manifest_id": {"type": "string"},
+        "work_id": {"type": "string"}
+      }
+    },
+    "integrity": {
+      "type": "string",
+      "enum": ["PASS", "FAIL", "INCONCLUSIVE"]
+    },
+    "attribution": {
+      "type": "object",
+      "required": ["class", "signed", "declared", "keccak_independent", "keys", "other_signatures"],
+      "properties": {
+        "class": {
+          "type": "string",
+          "enum": ["Unattributed", "Partially attributed", "Attributed", "Dual-family"]
+        },
+        "signed": {"type": "integer", "minimum": 0},
+        "declared": {"type": "integer", "minimum": 0},
+        "keccak_independent": {"type": "boolean"},
+        "keys": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["key", "status"],
+            "properties": {
+              "key": {"type": "string"},
+              "status": {"type": "string", "enum": ["signed", "missing"]},
+              "alg": {"type": ["string", "null"]}
+            }
+          }
+        },
+        "other_signatures": {
+          "type": "array",
+          "items": {"type": "object"}
+        }
+      }
+    },
+    "history": {
+      "type": "object",
+      "required": ["status"],
+      "properties": {
+        "status": {"type": "string", "enum": ["PASS", "WARN", "FAIL", "SKIPPED"]},
+        "reason": {"type": ["string", "null"]},
+        "parents": {"type": "array", "items": {"type": "string"}}
+      }
+    },
+    "time": {
+      "type": "object",
+      "required": ["status", "items"],
+      "properties": {
+        "status": {"type": "string", "enum": ["PASS", "WARN", "FAIL", "SKIPPED"]},
+        "reason": {"type": ["string", "null"]},
+        "items": {"type": "array", "items": {"type": "object"}}
+      }
+    },
+    "checks": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "status"],
+        "properties": {
+          "id": {"type": "string"},
+          "status": {"type": "string", "enum": ["PASS", "WARN", "FAIL", "SKIPPED"]},
+          "code": {"type": ["string", "null"]},
+          "detail": {"type": ["string", "null"]},
+          "items": {"type": "array"}
+        }
+      }
+    },
+    "warnings": {
+      "type": "array",
+      "items": {"type": "string"}
+    },
+    "notes": {
+      "type": "array",
+      "items": {"type": "string"}
+    }
+  }
+}
