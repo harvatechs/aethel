@@ -1,0 +1,133 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "aethel-codex"
+version = "0.1.0"
+description = "Name your writing by what it says. Reference CLI and library for the Permanent Ink Protocol (PIP-1)."
+readme = "README.md"
+requires-python = ">=3.11"
+license = "Apache-2.0"
+license-files = ["LICENSE"]
+keywords = ["pip-1", "content-addressing", "post-quantum", "ml-dsa", "slh-dsa", "canonical-text", "cli"]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Environment :: Console",
+  "Intended Audience :: Developers",
+  "Intended Audience :: Science/Research",
+  "Operating System :: POSIX :: Linux",
+  "Operating System :: MacOS",
+  "Operating System :: Microsoft :: Windows",
+  "Programming Language :: Python :: 3 :: Only",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Programming Language :: Python :: 3.14",
+  "Topic :: Security :: Cryptography",
+  "Topic :: Text Processing",
+  "Typing :: Typed",
+]
+dependencies = [
+  "cryptography>=50.0.2,<51",
+  "pqcrypto>=1.0.0,<2",
+  "unicodedata2>=18.0.0,<19",
+]
+
+[project.urls]
+Homepage = "https://aethel-codex.pages.dev/"
+Source = "https://github.com/OWNER/aethel-codex"
+Issues = "https://github.com/OWNER/aethel-codex/issues"
+Changelog = "https://github.com/OWNER/aethel-codex/blob/main/CHANGELOG.md"
+
+[project.scripts]
+aethel = "aethel_codex.cli:main"
+
+[dependency-groups]
+dev = [
+  "pytest",
+  "pytest-cov",
+  "hypothesis",
+  "mypy",
+  "ruff",
+  "import-linter",
+  "jsonschema",
+  "build",
+  "twine",
+  "pip-audit",
+  "cyclonedx-bom",
+  "dilithium-py==1.5.1",
+  "slh-dsa==0.2.5",
+]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/aethel_codex"]
+
+[tool.hatch.build.targets.sdist]
+include = [
+  "src/aethel_codex",
+  "tests",
+  "docs",
+  "tools",
+  "scripts",
+  "README.md",
+  "LICENSE",
+  "CHANGELOG.md",
+  "SECURITY.md",
+]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.ruff.lint]
+select = [
+  "E", "F", "W", "I", "N", "UP", "B", "C4", "C90", "SIM", "RUF", "S", "BLE", "PT", "D", "ANN", "T20"
+]
+
+[tool.ruff.lint.mccabe]
+max-complexity = 10
+
+[tool.ruff.lint.pydocstyle]
+convention = "google"
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**" = ["S101", "D", "ANN"]
+"tools/**" = ["T20", "S", "D", "ANN", "E501", "E402", "N802", "N818", "B904", "E741", "BLE001", "SIM", "PT018", "PT017", "N806", "N816", "N803", "C408", "E731", "UP031", "B007", "I", "RUF"]
+"scripts/**" = ["T20", "S", "D", "ANN"]
+"src/aethel_codex/cli/**" = ["T201"]
+
+[tool.mypy]
+strict = true
+python_version = "3.11"
+warn_unused_ignores = true
+
+[[tool.mypy.overrides]]
+module = [
+  "unicodedata2",
+  "pqcrypto",
+  "pqcrypto.*",
+  "dilithium_py",
+  "dilithium_py.*",
+  "slhdsa",
+  "slhdsa.*",
+]
+ignore_missing_imports = true
+
+[tool.pytest.ini_options]
+addopts = "-ra --strict-markers --strict-config"
+markers = [
+  "conformance: Yellow Paper conformance vectors, fixtures, and self-tests",
+  "oracle: tests requiring development oracle packages (dilithium-py, slh-dsa)",
+  "slow: performance, throughput, and large payload tests",
+  "fuzz: property and fuzzing tests",
+  "req(id): requirement traceability marker",
+]
+
+[tool.coverage.run]
+branch = true
+source = ["aethel_codex"]
+
+[tool.coverage.report]
+show_missing = true
+skip_covered = false

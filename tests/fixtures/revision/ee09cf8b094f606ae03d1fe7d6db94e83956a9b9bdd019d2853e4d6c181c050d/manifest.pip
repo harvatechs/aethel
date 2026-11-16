@@ -1,0 +1,11 @@
+pip-manifest 1
+profile pip-1
+markup pip-md-1
+lang en
+title Test Manuscript
+license CC0-1.0
+beacon example-beacon 123456 00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff
+text pip1:t:9e13e0cce8ecb379c0705c7d97e13c8e1f588c194bd0e6982dfde98ed6e8f413 26
+work pip1:m:e1bbe279695c1adc756913657cdb84c429b63d039ac5bd955b1b297aad0cd30d
+parent pip1:m:e1bbe279695c1adc756913657cdb84c429b63d039ac5bd955b1b297aad0cd30d
+author pip1:k:2b27c5d44b407af5e0a2f37adb4454591aa81accd28d852198ef4ae18999130b

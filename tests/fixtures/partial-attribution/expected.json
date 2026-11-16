@@ -1,0 +1,22 @@
+{
+  "manifest_id": "pip1:m:8a58594cb834f8454ae9d52929ff8e5c81916112b730df34e3186374871e9849",
+  "integrity": "PASS",
+  "attribution": {
+    "cls": "Partially attributed",
+    "signed": 1,
+    "declared": 2,
+    "keccak_independent": false
+  },
+  "checks": {
+    "V1": "PASS",
+    "V2": "PASS",
+    "V3": "PASS",
+    "V4": "PASS",
+    "V5": "SKIPPED:NO_PARENTS",
+    "V6": "PASS",
+    "V7": "PASS",
+    "V8": "SKIPPED:NO_TIME_EVIDENCE"
+  },
+  "exit_code_verify": 0,
+  "exit_code_verify_require_attributed": 1
+}

@@ -1,0 +1,19 @@
+# Virtual environment and build
+.venv/
+build/
+dist/
+*.egg-info/
+__pycache__/
+*.py[cod]
+
+# Caches and coverage
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.import_linter_cache/
+.coverage
+coverage.json
+htmlcov/
+
+# Local workspace resources
+Resources/

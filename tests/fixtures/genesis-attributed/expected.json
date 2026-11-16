@@ -1,0 +1,21 @@
+{
+  "manifest_id": "pip1:m:e1bbe279695c1adc756913657cdb84c429b63d039ac5bd955b1b297aad0cd30d",
+  "integrity": "PASS",
+  "attribution": {
+    "cls": "Attributed",
+    "signed": 1,
+    "declared": 1,
+    "keccak_independent": false
+  },
+  "checks": {
+    "V1": "PASS",
+    "V2": "PASS",
+    "V3": "PASS",
+    "V4": "PASS",
+    "V5": "SKIPPED:NO_PARENTS",
+    "V6": "PASS",
+    "V7": "PASS",
+    "V8": "SKIPPED:NO_TIME_EVIDENCE"
+  },
+  "exit_code_verify": 0
+}

@@ -1,0 +1,29 @@
+[importlinter]
+root_packages =
+    aethel_codex
+
+[importlinter:contract:layering]
+name = Architecture layering
+type = layers
+layers =
+    (aethel_codex.cli)
+    (aethel_codex.explain) | (aethel_codex.selftest)
+    (aethel_codex.verify) | (aethel_codex.report) | (aethel_codex.proof) | (aethel_codex.publish)
+    (aethel_codex.limits) | (aethel_codex.bundle) | (aethel_codex.keyfile)
+    (aethel_codex.backends) | (aethel_codex.signing)
+    (aethel_codex.citations) | (aethel_codex.manifest) | (aethel_codex.envelope)
+    (aethel_codex.ctf1) | (aethel_codex.merkle) | (aethel_codex.pid)
+    (aethel_codex.hashing) | (aethel_codex.unicode18) | (aethel_codex._repertoire)
+    (aethel_codex.constants) | (aethel_codex.errors)
+
+[importlinter:contract:core-never-imports-cli]
+name = Core never imports CLI
+type = forbidden
+source_modules =
+    aethel_codex
+forbidden_modules =
+    aethel_codex.cli
+ignore_imports =
+    aethel_codex -> aethel_codex.cli
+    aethel_codex.__main__ -> aethel_codex.cli
+unmatched_ignore_imports_alerting = none

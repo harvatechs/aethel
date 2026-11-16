@@ -1,0 +1,8 @@
+# Test bytes must never be rewritten by Git (autocrlf has silently broken hash tests in many projects).
+tests/vectors/**   -text
+tests/fixtures/**  -text
+tests/data/**      -text
+*.pip -text
+*.sig -text
+*.att -text
+*.aek -text

@@ -1,0 +1,32 @@
+{
+  "manifest_id": "pip1:m:ee09cf8b094f606ae03d1fe7d6db94e83956a9b9bdd019d2853e4d6c181c050d",
+  "integrity": "PASS",
+  "attribution": {
+    "cls": "Attributed",
+    "signed": 1,
+    "declared": 1,
+    "keccak_independent": false
+  },
+  "checks_without_parents": {
+    "V1": "PASS",
+    "V2": "PASS",
+    "V3": "PASS",
+    "V4": "PASS",
+    "V5": "SKIPPED:PARENTS_UNAVAILABLE",
+    "V6": "PASS",
+    "V7": "PASS",
+    "V8": "WARN:BEACON_UNVERIFIED"
+  },
+  "checks_with_parents": {
+    "V1": "PASS",
+    "V2": "PASS",
+    "V3": "PASS",
+    "V4": "PASS",
+    "V5": "PASS",
+    "V6": "PASS",
+    "V7": "PASS",
+    "V8": "WARN:BEACON_UNVERIFIED"
+  },
+  "parents_fixture": "../genesis-attributed/e1bbe279695c1adc756913657cdb84c429b63d039ac5bd955b1b297aad0cd30d",
+  "exit_code_verify": 0
+}
