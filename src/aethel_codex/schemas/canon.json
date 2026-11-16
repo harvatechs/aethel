@@ -1,0 +1,59 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://aethel.dev/schemas/canon-v1.json",
+  "title": "AethelCanonReport",
+  "type": "object",
+  "required": [
+    "schema",
+    "tool",
+    "canonical",
+    "input_bytes",
+    "output_bytes",
+    "changes"
+  ],
+  "properties": {
+    "schema": {
+      "type": "string",
+      "const": "aethel.canon/1"
+    },
+    "tool": {
+      "type": "object",
+      "required": ["name", "version", "profile", "yellow_paper"],
+      "properties": {
+        "name": {"type": "string"},
+        "version": {"type": "string"},
+        "profile": {"type": "string"},
+        "yellow_paper": {"type": "string"}
+      }
+    },
+    "canonical": {
+      "type": "boolean"
+    },
+    "input_bytes": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "output_bytes": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "changes": {
+      "type": "object",
+      "required": [
+        "bom_removed",
+        "crlf_converted",
+        "lone_cr_converted",
+        "nfc_changed",
+        "final_lf_added"
+      ],
+      "properties": {
+        "bom_removed": {"type": "boolean"},
+        "crlf_converted": {"type": "integer", "minimum": 0},
+        "lone_cr_converted": {"type": "integer", "minimum": 0},
+        "nfc_changed": {"type": "boolean"},
+        "final_lf_added": {"type": "boolean"}
+      }
+    }
+  },
+  "additionalProperties": false
+}

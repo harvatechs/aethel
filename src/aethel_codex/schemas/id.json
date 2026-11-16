@@ -1,0 +1,51 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://aethel.dev/schemas/id-v1.json",
+  "title": "AethelIdResult",
+  "type": "object",
+  "required": [
+    "schema",
+    "tool",
+    "file",
+    "kind",
+    "id",
+    "length",
+    "chunks"
+  ],
+  "properties": {
+    "schema": {
+      "type": "string",
+      "const": "aethel.id/1"
+    },
+    "tool": {
+      "type": "object",
+      "required": ["name", "version", "profile", "yellow_paper"],
+      "properties": {
+        "name": {"type": "string"},
+        "version": {"type": "string"},
+        "profile": {"type": "string"},
+        "yellow_paper": {"type": "string"}
+      }
+    },
+    "file": {
+      "type": ["string", "null"]
+    },
+    "kind": {
+      "type": "string",
+      "enum": ["text", "asset"]
+    },
+    "id": {
+      "type": "string",
+      "pattern": "^pip1:[ta]:[0-9a-f]{64}$"
+    },
+    "length": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "chunks": {
+      "type": "integer",
+      "minimum": 1
+    }
+  },
+  "additionalProperties": false
+}

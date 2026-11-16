@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://aethel.dev/schemas/inspect-v1.json",
+  "title": "AethelInspectResult",
+  "type": "object",
+  "required": [
+    "schema",
+    "tool",
+    "manifest_id",
+    "manifest"
+  ],
+  "properties": {
+    "schema": {
+      "type": "string",
+      "const": "aethel.inspect/1"
+    },
+    "tool": {
+      "type": "object",
+      "required": ["name", "version", "profile", "yellow_paper"],
+      "properties": {
+        "name": {"type": "string"},
+        "version": {"type": "string"},
+        "profile": {"type": "string"},
+        "yellow_paper": {"type": "string"}
+      }
+    },
+    "manifest_id": {
+      "type": "string",
+      "pattern": "^pip1:m:[0-9a-f]{64}$"
+    },
+    "manifest": {
+      "type": "object"
+    }
+  },
+  "additionalProperties": false
+}

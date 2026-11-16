@@ -1,0 +1,83 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://aethel.dev/schemas/publish-v1.json",
+  "title": "AethelPublishResult",
+  "type": "object",
+  "required": [
+    "schema",
+    "tool",
+    "manifest_id",
+    "text_id",
+    "text_length",
+    "text_chunks",
+    "bundle_path",
+    "signatures",
+    "dry_run",
+    "integrity",
+    "attribution"
+  ],
+  "properties": {
+    "schema": {
+      "type": "string",
+      "const": "aethel.publish/1"
+    },
+    "tool": {
+      "type": "object",
+      "required": ["name", "version", "profile", "yellow_paper"],
+      "properties": {
+        "name": {"type": "string"},
+        "version": {"type": "string"},
+        "profile": {"type": "string"},
+        "yellow_paper": {"type": "string"}
+      }
+    },
+    "manifest_id": {
+      "type": "string",
+      "pattern": "^pip1:m:[0-9a-f]{64}$"
+    },
+    "text_id": {
+      "type": "string",
+      "pattern": "^pip1:t:[0-9a-f]{64}$"
+    },
+    "text_length": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "text_chunks": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "bundle_path": {
+      "type": ["string", "null"]
+    },
+    "signatures": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["role", "alg", "key_id", "file"],
+        "properties": {
+          "role": {"type": "string"},
+          "alg": {"type": "string"},
+          "key_id": {"type": "string", "pattern": "^pip1:k:[0-9a-f]{64}$"},
+          "file": {"type": "string"}
+        },
+        "additionalProperties": false
+      }
+    },
+    "dry_run": {
+      "type": "boolean"
+    },
+    "integrity": {
+      "type": ["string", "null"]
+    },
+    "attribution": {
+      "type": ["object", "null"],
+      "properties": {
+        "class": {"type": "string"},
+        "signed": {"type": "integer"},
+        "declared": {"type": "integer"}
+      }
+    }
+  },
+  "additionalProperties": false
+}

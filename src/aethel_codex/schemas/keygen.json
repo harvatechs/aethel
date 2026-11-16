@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://aethel.dev/schemas/keygen-v1.json",
+  "title": "AethelKeygenResult",
+  "type": "object",
+  "required": [
+    "schema",
+    "tool",
+    "keys"
+  ],
+  "properties": {
+    "schema": {
+      "type": "string",
+      "const": "aethel.keygen/1"
+    },
+    "tool": {
+      "type": "object",
+      "required": ["name", "version", "profile", "yellow_paper"],
+      "properties": {
+        "name": {"type": "string"},
+        "version": {"type": "string"},
+        "profile": {"type": "string"},
+        "yellow_paper": {"type": "string"}
+      }
+    },
+    "keys": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["alg", "key_id", "path", "protection"],
+        "properties": {
+          "alg": {"type": "string"},
+          "key_id": {"type": "string", "pattern": "^pip1:k:[0-9a-f]{64}$"},
+          "path": {"type": "string"},
+          "protection": {"type": "string"}
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

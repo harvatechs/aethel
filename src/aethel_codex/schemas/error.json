@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://aethel.dev/schemas/error-v1.json",
+  "title": "AethelError",
+  "type": "object",
+  "required": ["schema", "code", "message", "exit", "yp"],
+  "properties": {
+    "schema": {
+      "type": "string",
+      "const": "aethel.error/1"
+    },
+    "code": {
+      "type": "string"
+    },
+    "message": {
+      "type": "string"
+    },
+    "exit": {
+      "type": "integer"
+    },
+    "yp": {
+      "type": ["string", "null"]
+    }
+  },
+  "additionalProperties": false
+}
