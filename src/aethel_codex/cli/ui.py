@@ -54,6 +54,26 @@ class UIContext:
         return pid_str
 
 
+def sanitize_terminal_text(text: str) -> str:
+    r"""Sanitize untrusted text before printing to terminal (R-SEC-03, YP §12.6).
+
+    Escapes C0/C1 controls, bidirectional controls, and tag characters as \u{...}.
+    """
+    out: list[str] = []
+    for ch in text:
+        cp = ord(ch)
+        is_c0 = cp < 0x20
+        is_c1 = 0x7F <= cp <= 0x9F
+        is_bidi = cp in (0x200E, 0x200F) or (0x202A <= cp <= 0x202E) or (0x2066 <= cp <= 0x2069)
+        is_tag = 0xE0000 <= cp <= 0xE007F
+
+        if is_c0 or is_c1 or is_bidi or is_tag:
+            out.append(f"\\u{{{cp:04X}}}")
+        else:
+            out.append(ch)
+    return "".join(out)
+
+
 def colorize(text: str, code: str, enabled: bool) -> str:
     """Wrap text in ANSI escape sequence if enabled."""
     if not enabled:
