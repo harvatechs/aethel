@@ -1,89 +1,180 @@
-# Aethel Codex — Build Pack for the `aethel` CLI
+# aethel-codex
 
-**Pack 1.0 · prepared 14 November 2026 · implements Yellow Paper PIP-YP-1 v1.0.0-rc.3 (profile `pip-1`)**
+Gives a piece of writing a name made from the writing itself.
+Reference command-line tool and Python library for the Permanent Ink Protocol profile **pip-1** (Yellow Paper PIP-YP-1 v1.0.0-rc.3).
 
-This pack tells an AI coding agent, or a human team, exactly how to build **`aethel`**: a clean, offline-first Python command-line tool and library that gives a piece of writing a name made from the writing itself, signs it with post-quantum signatures, and verifies it with nothing but the files.
+---
 
-It is written to prevent the usual failure of AI-built projects: plausible code that quietly deviates from the standard. Every protocol rule traces to the Yellow Paper. Every claim in this pack that could be checked was checked on 14 November 2026 (see "What was verified").
+## Installation
 
-## What you are building
+Install via `pipx` or `uv`:
 
-| | |
+```bash
+pipx install aethel-codex
+```
+
+> **Warning:** Always install **`aethel-codex`**. Never install `aethel` (an unrelated package on PyPI).
+
+`aethel` requires Python 3.11 or newer on Linux, macOS, or Windows. It installs as a pure-Python wheel and brings exactly three runtime dependencies: `cryptography`, `pqcrypto`, and `unicodedata2`.
+
+---
+
+## Five-Minute Tutorial
+
+### 1. Generate an author key
+
+Create an ML-DSA-87 post-quantum signing key:
+
+```bash
+aethel keygen --out author.aek --no-passphrase
+```
+
+### 2. Publish a manuscript
+
+Write a short manuscript:
+
+```bash
+cat << 'EOF' > essay.md
+# On Writing
+
+Words written with care.
+EOF
+```
+
+Publish the manuscript into a self-contained bundle:
+
+```bash
+aethel publish essay.md --title "On Writing" --license "CC-BY-4.0" --key author.aek --out-dir bundles/
+```
+
+This creates a bundle directory named by its 64-hex manifest identifier containing:
+- `manifest.pip`: the strict canonical manifest binding text, metadata, and author keys
+- `text.md`: the canonical UTF-8 text (CTF-1)
+- `author.sig`: the detached post-quantum signature envelope (SGE-1)
+
+### 3. Verify the bundle
+
+Verify the bundle with nothing but the files:
+
+```bash
+aethel verify bundles/61*
+```
+
+Example output:
+
+```text
+Manifest     pip1:m:61...
+Text         pip1:t:18...
+
+Integrity    PASS
+Attribution  Attributed (1 of 1)
+History      Genesis
+Time         SKIPPED      no beacon and no attestations
+
+Checks  V1 PASS · V2 PASS · V3 SKIPPED · V4 SKIPPED · V5 SKIPPED · V6 PASS · V7 SKIPPED · V8 SKIPPED
+A valid signature shows that the holder of a key approved this manifest. It does not show who that person is.
+PIP-1 never produces a time value of its own.
+```
+
+### 4. Detect tampering
+
+Change a single byte in `text.md`:
+
+```bash
+echo "tampered" >> bundles/61*/text.md
+aethel verify bundles/61*
+```
+
+Output:
+
+```text
+Integrity    FAIL
+Attribution  Attributed (1 of 1)
+               pip1:k:256c3fc3...   signed   ml-dsa-87
+History      SKIPPED      genesis manifest, no parents
+Time         SKIPPED      no beacon and no attestations
+
+Checks  V1 PASS · V2 FAIL · V3 PASS · V4 PASS · V5 SKIPPED · V6 PASS · V7 PASS · V8 SKIPPED
+```
+
+A change to the text, assets, metadata, citations or declared authors changes the manifest identifier.
+
+---
+
+## What Verification Does and Does Not Show
+
+PIP-1 and `aethel` adhere to strict and honest claims boundaries:
+
+- **What it shows**:
+  - **Integrity**: Proves whether the text and assets match the cryptographic digests in the manifest.
+  - **Attribution**: Shows whether the holder of a declared key approved this exact manifest as author.
+  - **History**: Shows whether revision parent links match the declared prior manifests.
+  - **Time**: Shows external attestations if present. (The tool itself produces no time evidence).
+
+- **What it does NOT show**:
+  - **Identity**: A valid signature shows that the holder of key `pip1:k:…` approved this exact manifest as author. PIP-1 cannot say who holds the key.
+  - **Originality / First Invention**: Anyone can copy a text and sign it with their own key. A valid signature shows that the key holder approved this exact manifest; it does not determine who conceived the ideas or wrote the words first.
+  - **Storage**: Tampering is detectable. This tool does not store or keep copies.
+  - **Confidentiality / Anonymity**: PIP-1 provides no anonymity and no confidentiality. All manifests and texts are public.
+
+Signatures use ML-DSA (FIPS 204) and SLH-DSA (FIPS 205), standards designed to resist quantum computers.
+
+---
+
+## Commands at a Glance
+
+| Command | Purpose |
 |---|---|
-| Distribution / import / command | `aethel-codex` (PyPI) · `aethel_codex` (import) · `aethel` (command) |
-| Runtime | Python ≥ 3.11 on Linux, macOS, Windows. Pure-Python wheel; compiled code comes only from three vetted dependencies |
-| Conformance roles of PIP-1 | Canonicalizer (CTF-1), Manifest producer (PMF-1), Signer (ML-DSA, SLH-DSA), Verifier (V1–V8) |
-| Behaviour | Offline always. No account, no network, no telemetry, no clock. Plain-text formats a future reader can decode |
-| Core commands (P0) | `canon` `id` `keygen` `publish` `sign` `verify` `inspect` `selftest` `explain` `--version` |
-| Next commands (P1) | `revise` `cite` `proof` `attest` |
-| Not in this MVP | Blockchain, tokens, storage networks, curation, zero-knowledge identity, quantum random beacons. The Yellow Paper itself puts all of these out of scope of PIP-1 |
+| `aethel canon <path>` | Normalize Markdown/text to Canonical Text Form (CTF-1) |
+| `aethel id <path>` | Compute content-addressed identifier (`pip1:t:...` or `pip1:a:...`) |
+| `aethel keygen --out <path>` | Generate a post-quantum signing key (`ml-dsa-87`, `slh-dsa-...`) |
+| `aethel publish <path>` | Package text and assets into a signed PIP-1 bundle |
+| `aethel sign <bundle> --key <path>` | Add a detached signature envelope (SGE-1) to an existing bundle |
+| `aethel verify <bundle>` | Verify integrity, attribution, history, and time checks (V1–V8) |
+| `aethel inspect <bundle>` | Inspect manifest metadata, declared authors, and asset tables |
+| `aethel selftest` | Run 13 built-in offline conformance checks against embedded vectors |
+| `aethel explain <code>` | Explain error codes and suggest actionable remediation |
+| `aethel revise <bundle>` | Create a revision bundle linked to parent editions |
+| `aethel cite make/check/show` | Generate, check, and display canonical citation URIs |
+| `aethel proof make/verify` | Generate and verify chunk Merkle audit paths (TFP-1) |
+| `aethel attest add` | Attach external attestation envelopes (ATT-1) |
 
-## How to use this pack (owner, 10 minutes)
+---
 
-1. Create the repository. Copy this pack in as-is: `AGENTS.md`, `.gitattributes`, `docs/`, `tests/` and `tools/` at the repository root.
-2. Read `docs/decision-log.md`, section "Owner decisions". Each has a safe default. Change only what you disagree with.
-3. Reserve the package names now (see "Needs your attention", item 1).
-4. Start your agent and paste the kickoff prompt from `docs/prompts.md`.
-5. Accept each work package only with its gate evidence (`docs/division-of-work.md`). Do not accept "done" without command output.
+## Library Example
 
-## File map
+`aethel_codex` exposes a small, fully typed, documented Python API:
 
-| File | Purpose | Read when |
-|---|---|---|
-| `AGENTS.md` | One-page constitution the agent loads first | Always |
-| `docs/rules.md` | Numbered hard rules (R-…) with how each is checked | Always |
-| `docs/what-not-to-do.md` | Forbidden shortcuts, Python traps, banned claims | Always |
-| `docs/intent.md` | Why this exists, voice, quality bar, scope boundary | Before design decisions |
-| `docs/user-requirements.md` | Personas, requirements (UR-…), acceptance criteria | Before each WP |
-| `docs/specs.md` | The implementation spec: algorithms, grammar, verification, formats | While coding any protocol code |
-| `docs/architecture.md` | Layout, layering, public API, backend contract | While structuring code |
-| `docs/cli-spec.md` | Every command, flag, output, JSON schema, exit code | While building the CLI |
-| `docs/testing-and-conformance.md` | Test layers, vectors, fixtures, tamper matrix, CI gates | While writing tests |
-| `docs/division-of-work.md` | Work packages, dependencies, gates, roles, hand-offs | Planning and reporting |
-| `docs/precision-scale-index.md` | Precision tiers, scale bands, failure classes, recovery playbooks | When anything goes wrong |
-| `docs/skills.md` | Skills the agent must apply, each with a procedure | When starting a new kind of task |
-| `docs/guidelines.md` | Style, naming, messages, commits, reviews | Always while coding |
-| `docs/security.md` | Threat model, key handling, supply chain | WP-06, WP-08, WP-13, WP-14 |
-| `docs/release-and-deployment.md` | Packaging, CI, release ritual, site updates | WP-14 onward |
-| `docs/decision-log.md` | Accepted decisions, spec interpretations, owner decisions | Always (before deviating) |
-| `docs/prompts.md` | Ready-to-paste prompts and report templates | Operating the agent |
-| `docs/yellow-paper/PIP-YP-1_v1.0.0-rc.3.pdf` | The normative source | Whenever in doubt |
-| `tests/vectors/pip1-vectors.json` | Yellow Paper vectors plus pack-generated regression data | WP-01 onward |
-| `tests/vectors/pip1-slh-dsa-vectors.json` | SLH-DSA verify vectors (pack-generated) | WP-06 |
-| `tests/fixtures/` | Five golden bundles with `expected.json` verdicts | WP-07 onward |
-| `tests/README.md` | Provenance of every data file and how to regenerate | When touching test data |
-| `tools/recompute_yp_vectors.py` | Recomputes every Yellow Paper value independently (audit script) | RB-1, RB-13 |
-| `tools/gen_pack_data.py` | Regenerates pack data (guarded; Spec Guardian only) | Rarely |
-| `.gitattributes` | Stops Git rewriting test bytes | WP-00 |
-| `docs/work-log/ queries/ reviews/ incidents/` | Where the agent's evidence, questions, reviews and incident notes accumulate | Every WP |
+```python
+from pathlib import Path
+from aethel_codex import canonicalize, text_id, verify_bundle
 
-## Source-of-truth order
+# 1. Canonicalize text to CTF-1 (NFC, LF endings, no BOM)
+raw_bytes = b"# Hello World\r\n\r\nWritten text.\r\n"
+canonical_bytes, report = canonicalize(raw_bytes)
 
-1. **Yellow Paper PDF** (normative).
-2. **`tests/vectors/`** (oracles; see `rules.md` R-PROTO-02).
-3. **`docs/specs.md`** (derived guide; if it disagrees with 1, report it and follow 1).
-4. **`docs/decision-log.md`** (resolutions where the Yellow Paper is silent, each flagged `[PACK]`).
-5. Everything else.
+# 2. Compute the PIP-1 text identifier
+tid = text_id(canonical_bytes)
+print(f"Text ID: {tid}")
+# Text ID: pip1:t:770854d92fa62f1c849e755ea7e30d1d73cb6aa3cb478a55dbbb868fbfa59728
 
-## What was verified while preparing this pack (14 Nov 2026)
+# 3. Verify an existing bundle
+ver_report = verify_bundle(
+    Path(
+        "tests/fixtures/genesis-attributed/e1bbe279695c1adc756913657cdb84c429b63d039ac5bd955b1b297aad0cd30d"
+    )
+)
+print(f"Integrity:   {ver_report.integrity}")
+print(f"Attribution: {ver_report.attribution.cls}")
+# Integrity:   PASS
+# Attribution: Attributed
+```
 
-| Check | Result |
-|---|---|
-| Every Yellow Paper vector (T1–T4, 12 CTF-1 negatives, both manifests, 8 manifest mutations, locator table, key id, signature digest) recomputed from first principles | All reproduce exactly |
-| The ML-DSA-87 signature from Appendix A.2 | Verified by three independent libraries: `dilithium-py` 1.5.1, `cryptography` 50.0.2, `pqcrypto` 1.0.0 |
-| SLH-DSA-SHA2-256s and SHAKE-256s | `pqcrypto` 1.0.0 and the independent pure-Python `slh-dsa` 0.2.5 verify each other's signatures, with context `pip1.sig` |
-| `unicodedata2` 18.0.0 | Installable with wheels; `unidata_version == "18.0.0"`. Python 3.12's own `unicodedata` is **15.0.0** |
-| Streaming Merkle tree, audit paths, strict manifest parser, citation locators | Prototyped and tested against the paper's tables |
-| Landing-page vectors (`aethel-codex.pages.dev`) | Both reproduce, including the 834-byte manifesto |
-| Golden bundles | Five fixtures verified by an independent mini-verifier |
+---
 
-## Needs your attention
+## Normative References & Links
 
-1. **PyPI name collision.** `aethel` is already registered by an unrelated project that ships a top-level module `aethel`. This pack therefore uses `aethel-codex` / `aethel_codex`. At the time of checking, `aethel-codex`, `aethelcodex`, `pip1` and `permanent-ink` were unregistered. Reserve them. Tell users to install `aethel-codex`, never `aethel`.
-2. **The paper's reference implementation is not production crypto.** It uses `dilithium-py`, an educational pure-Python library. The Yellow Paper (§12.7) itself asks for maintained, constant-time implementations. This pack's backend plan: `cryptography` for ML-DSA, `pqcrypto` for SLH-DSA, and the two pure-Python libraries as test oracles only.
-3. **Landing page drift.** The site says rc.1 while the paper is rc.3, and two identifiers display with a doubled prefix (`pip1:t:pip1:t:…`). Check whether that is a rendering issue. The release plan lists the site updates.
-4. **Where the paper is silent**, this pack made explicit choices, each tagged `[PACK]` in `docs/decision-log.md`. Send them to the Working Group as clarification requests.
-
-## Glossary
-
-**CTF-1** canonical text form. **PID** PIP identifier such as `pip1:t:<64 hex>`. **Blob** canonical text or asset bytes. **Manifest (PMF-1)** the plain-text record that binds text, assets, citations, history and authors. **Bundle** a directory holding a manifest, text, assets, signatures, attestations. **Envelope** a detached signature (SGE-1) or attestation (ATT-1) file. **Profile** the fixed algorithm set; here `pip-1`. **YP** the Yellow Paper. **WP** work package. **ADR** architecture decision record. **OD** owner decision. **PT / FC** precision tier / failure class (see `precision-scale-index.md`).
+- **Normative Specification**: [Yellow Paper PIP-YP-1 v1.0.0-rc.3](docs/yellow-paper/PIP-YP-1_v1.0.0-rc.3.pdf)
+- **Tutorial & Guides**: [Tutorial](docs/tutorial.md) · [Verify By Hand](docs/verify-by-hand.md) · [CLI Manual](docs/man-page.md)
+- **Minimal Verifier**: [scripts/verify_minimal.py](scripts/verify_minimal.py) (zero external dependencies, stdlib only)
+- **License**: Apache-2.0

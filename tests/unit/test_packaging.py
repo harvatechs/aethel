@@ -41,7 +41,8 @@ def test_package_metadata_contracts() -> None:
     """Verify package name, entry point and version contracts."""
     meta = importlib.metadata.metadata("aethel-codex")
     assert meta["Name"] == "aethel-codex"
-    assert meta.get("License-Expression") == "Apache-2.0" or meta.get("License") == "Apache-2.0"
+    lic = meta["License-Expression"] if "License-Expression" in meta else meta["License"]
+    assert lic == "Apache-2.0"
 
     # Check console script entry point
     entry_points = importlib.metadata.entry_points(group="console_scripts")
