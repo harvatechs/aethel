@@ -172,9 +172,45 @@ print(f"Attribution: {ver_report.attribution.cls}")
 
 ---
 
+## Research & Academic Citation
+
+If you use `aethel` or the Permanent Ink Protocol in academic research, archival preservation, or security studies, please cite this reference implementation:
+
+```bibtex
+@software{vardhan2026aethel,
+  author       = {Harsha Vardhan},
+  title        = {aethel-codex: Reference CLI and Python Library for the Permanent Ink Protocol (PIP-1)},
+  year         = {2026},
+  publisher    = {GitHub},
+  journal      = {GitHub repository},
+  howpublished = {\url{https://github.com/harvatechs/aethel-pip-one}},
+  version      = {0.1.0-rc.1}
+}
+```
+
+See `CITATION.cff` for additional metadata.
+
+---
+
+## Contact & Project Information
+
+- **Author & Lead Architect**:
+  **Harsha Vardhan**
+  Founder at HarVa Groups
+  Lead Architect at Archivist Labs (Init. of Aethel Codex)
+  Email: `heyharva@gmail.com`
+
+- **Repository**: [https://github.com/harvatechs/aethel-pip-one](https://github.com/harvatechs/aethel-pip-one)
+- **Official Documentation**: [https://aethel-codex.pages.dev/](https://aethel-codex.pages.dev/)
+
+---
+
 ## Normative References & Links
 
 - **Normative Specification**: [Yellow Paper PIP-YP-1 v1.0.0-rc.3](docs/yellow-paper/PIP-YP-1_v1.0.0-rc.3.pdf)
-- **Tutorial & Guides**: [Tutorial](docs/tutorial.md) · [Verify By Hand](docs/verify-by-hand.md) · [CLI Manual](docs/man-page.md)
+- **Conformance Report**: [docs/conformance-report.md](docs/conformance-report.md)
+- **Guides**: [Tutorial](docs/tutorial.md) · [Verify By Hand](docs/verify-by-hand.md) · [CLI Manual](docs/man-page.md)
+- **Contributing & Research**: [CONTRIBUTING.md](CONTRIBUTING.md)
+- **Security Policy**: [SECURITY.md](SECURITY.md)
 - **Minimal Verifier**: [scripts/verify_minimal.py](scripts/verify_minimal.py) (zero external dependencies, stdlib only)
-- **License**: Apache-2.0
+- **License**: [Apache-2.0](LICENSE)

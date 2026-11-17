@@ -10,6 +10,12 @@ readme = "README.md"
 requires-python = ">=3.11"
 license = "Apache-2.0"
 license-files = ["LICENSE"]
+authors = [
+  { name = "Harsha Vardhan", email = "heyharva@gmail.com" },
+]
+maintainers = [
+  { name = "Harsha Vardhan (Archivist Labs)", email = "heyharva@gmail.com" },
+]
 keywords = ["pip-1", "content-addressing", "post-quantum", "ml-dsa", "slh-dsa", "canonical-text", "cli"]
 classifiers = [
   "Development Status :: 3 - Alpha",
@@ -36,9 +42,9 @@ dependencies = [
 
 [project.urls]
 Homepage = "https://aethel-codex.pages.dev/"
-Source = "https://github.com/OWNER/aethel-codex"
-Issues = "https://github.com/OWNER/aethel-codex/issues"
-Changelog = "https://github.com/OWNER/aethel-codex/blob/main/CHANGELOG.md"
+Source = "https://github.com/harvatechs/aethel-pip-one"
+Issues = "https://github.com/harvatechs/aethel-pip-one/issues"
+Changelog = "https://github.com/harvatechs/aethel-pip-one/blob/main/CHANGELOG.md"
 
 [project.scripts]
 aethel = "aethel_codex.cli:main"
