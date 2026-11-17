@@ -28,7 +28,7 @@ def slh_vectors() -> dict[str, Any]:
 
 
 @pytest.mark.conformance
-@pytest.mark.req("UR-01")
+@pytest.mark.req("UR-15")
 def test_ml_dsa_87_vector_and_negatives(yp_vectors: dict[str, Any]) -> None:
     vec = yp_vectors["signature_ml_dsa_87"]
     backend = get_backend(0x02)

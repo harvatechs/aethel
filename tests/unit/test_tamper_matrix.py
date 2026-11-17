@@ -29,6 +29,7 @@ def _flip_byte_at(file_path: Path, offset: int) -> None:
     file_path.write_bytes(bytes(data))
 
 
+@pytest.mark.req("UR-22")
 def test_tamper_manifest_bit_flip(tmp_path: Path) -> None:
     """Bit flip in manifest.pip causes V1 FAIL and integrity FAIL."""
     bundle = _copy_bundle("genesis-attributed", tmp_path)

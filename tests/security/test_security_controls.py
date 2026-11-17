@@ -19,6 +19,7 @@ REPO_SRC = Path(__file__).resolve().parent.parent.parent / "src" / "aethel_codex
 BANNED_MODULES = {"socket", "urllib", "http", "ssl", "requests", "subprocess"}
 
 
+@pytest.mark.req("UR-31")
 def test_no_network_or_subprocess_imports_ast() -> None:
     """Verify that no file in src/aethel_codex/ imports banned network or subprocess modules."""
     assert REPO_SRC.is_dir(), f"Source directory not found: {REPO_SRC}"

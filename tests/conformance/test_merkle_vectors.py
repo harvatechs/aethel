@@ -17,7 +17,7 @@ def yp_vectors() -> dict[str, Any]:
 
 
 @pytest.mark.conformance
-@pytest.mark.req("UR-01")
+@pytest.mark.req("UR-02")
 def test_blob_id_t1() -> None:
     t1_bytes = b"# The Aethel Codex\n\nWrite once. Verify forever.\n"
     assert len(t1_bytes) == 48

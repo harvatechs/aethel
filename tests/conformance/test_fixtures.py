@@ -30,6 +30,11 @@ def _load_fixture_data(scenario: str) -> tuple[Path, dict[str, Any]]:
 
 
 @pytest.mark.conformance
+@pytest.mark.req("UR-17")
+@pytest.mark.req("UR-18")
+@pytest.mark.req("UR-19")
+@pytest.mark.req("UR-20")
+@pytest.mark.req("UR-21")
 def test_fixture_genesis_attributed(verify_schema: dict[str, Any]) -> None:
     bundle_path, expected = _load_fixture_data("genesis-attributed")
     report = verify_bundle(bundle_path)

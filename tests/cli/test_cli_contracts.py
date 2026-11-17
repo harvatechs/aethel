@@ -122,6 +122,7 @@ def test_cli_help_flag(monkeypatch: pytest.MonkeyPatch) -> None:
 # -----------------------------------------------------------------------------
 
 
+@pytest.mark.req("UR-37")
 def test_cli_canon_check_canonical(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
     canon_file = tmp_path / "valid.txt"
     canon_file.write_bytes(b"Clean text line.\n")
@@ -189,6 +190,7 @@ def test_cli_canon_invalid_utf8_exit_3(tmp_path: Path, monkeypatch: pytest.Monke
 # -----------------------------------------------------------------------------
 
 
+@pytest.mark.req("UR-04")
 def test_cli_id_text_and_asset(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
     txt_file = tmp_path / "doc.md"
     txt_file.write_bytes(b"Hello world\n")
@@ -562,6 +564,7 @@ def _get_fixture_bundle(scenario: str) -> Path:
     return scenario_dir / manifest_hex
 
 
+@pytest.mark.req("UR-23")
 def test_cli_verify_golden_fixtures(monkeypatch: pytest.MonkeyPatch) -> None:
     """Verify golden fixtures 01 through 05 via CLI."""
     parent_bundle = _get_fixture_bundle("genesis-attributed")
@@ -639,6 +642,7 @@ def test_cli_verify_exit_code_precedence(monkeypatch: pytest.MonkeyPatch) -> Non
 # -----------------------------------------------------------------------------
 
 
+@pytest.mark.req("UR-40")
 def test_cli_ascii_and_no_color_flags(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
     ms = tmp_path / "test.txt"
     ms.write_bytes(b"ASCII mode test.\n")

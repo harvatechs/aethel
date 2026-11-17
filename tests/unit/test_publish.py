@@ -15,6 +15,10 @@ from aethel_codex.publish import (
 from aethel_codex.verify import verify_bundle
 
 
+@pytest.mark.req("UR-08")
+@pytest.mark.req("UR-10")
+@pytest.mark.req("UR-11")
+@pytest.mark.req("UR-12")
 def test_publish_genesis_attributed(tmp_path: Path) -> None:
     manuscript = tmp_path / "essay.md"
     manuscript.write_bytes(b"# On Names\n\nContent for the essay.\n")
@@ -147,6 +151,7 @@ def test_publish_collision_different_content(tmp_path: Path) -> None:
     assert exc.value.code == "ID_MISMATCH"
 
 
+@pytest.mark.req("UR-09")
 def test_publish_assets_and_case_collision(tmp_path: Path) -> None:
     manuscript = tmp_path / "assets_doc.md"
     manuscript.write_bytes(b"Assets doc.\n")

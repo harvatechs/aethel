@@ -29,6 +29,7 @@ def selftest_schema(schemas_dir: Path) -> dict[str, Any]:
         return json.load(f)  # type: ignore[no-any-return]
 
 
+@pytest.mark.req("UR-26")
 def test_version_subcommand_human(capsys: pytest.CaptureFixture[str]) -> None:
     rc = main(["version"])
     assert rc == 0
@@ -71,6 +72,7 @@ def test_global_version_flag(capsys: pytest.CaptureFixture[str]) -> None:
     assert captured.out == "aethel 0.1.0 (PIP-1 profile pip-1, Yellow Paper 1.0.0-rc.3)\n"
 
 
+@pytest.mark.req("UR-25")
 def test_explain_all_registered_codes(capsys: pytest.CaptureFixture[str]) -> None:
     """Every single code in ERROR_CODE_REGISTRY must have a valid explanation."""
     assert len(ERROR_CODE_REGISTRY) >= 50
@@ -127,6 +129,7 @@ def test_explain_missing_code(capsys: pytest.CaptureFixture[str]) -> None:
     assert "missing error code" in captured.err
 
 
+@pytest.mark.req("UR-24")
 def test_selftest_human(capsys: pytest.CaptureFixture[str]) -> None:
     rc = main(["selftest"])
     assert rc == 0

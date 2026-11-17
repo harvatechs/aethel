@@ -10,6 +10,8 @@ from aethel_codex.errors import KeyFileError
 from aethel_codex.keyfile import SecretKey, create_key, load_key
 
 
+@pytest.mark.req("UR-05")
+@pytest.mark.req("UR-39")
 def test_keyfile_roundtrip_unencrypted(tmp_path: Path) -> None:
     key_path = tmp_path / "plain.aek"
     created = create_key("ml-dsa-87", key_path)
@@ -24,6 +26,7 @@ def test_keyfile_roundtrip_unencrypted(tmp_path: Path) -> None:
     assert sk.key_pid.pid_type == "k"
 
 
+@pytest.mark.req("UR-06")
 def test_keyfile_roundtrip_encrypted(tmp_path: Path) -> None:
     key_path = tmp_path / "encrypted.aek"
     passphrase = "correct horse battery staple"  # noqa: S105

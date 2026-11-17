@@ -14,6 +14,8 @@ import shutil
 import sys
 from pathlib import Path
 
+import pytest
+
 from aethel_codex.verify import verify_bundle
 
 REPO_ROOT = Path(__file__).resolve().parent.parent.parent
@@ -41,6 +43,7 @@ def _get_fixture_bundles() -> list[Path]:
     return bundles
 
 
+@pytest.mark.req("UR-36")
 def test_minimal_verifier_agrees_on_all_fixtures() -> None:
     """The minimal verifier and the package verifier agree on all 5 golden fixtures."""
     bundles = _get_fixture_bundles()

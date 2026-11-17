@@ -20,6 +20,7 @@ jobs:
       - run: uv run pytest -m conformance -q
       - run: uv build
       - run: uv run twine check dist/*
+      - run: uv run cyclonedx-py environment --output-reproducible -o dist/sbom.json
       - name: Generate Checksums
         run: |
           cd dist && sha256sum * > SHA256SUMS
