@@ -10,8 +10,11 @@ jobs:
   nightly-fuzz-slow:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
-      - uses: astral-sh/setup-uv@887a942a15ab33a325bd888a5022631ef955737b # v5.1.0
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v5
+        with:
+          python-version: "3.12"
+          enable-cache: true
       - run: uv sync --all-groups
       - run: uv run pytest -m fuzz -q
       - run: uv run pytest -m slow -q

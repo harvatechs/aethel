@@ -11,8 +11,11 @@ jobs:
   build-and-publish:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
-      - uses: astral-sh/setup-uv@887a942a15ab33a325bd888a5022631ef955737b # v5.1.0
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v5
+        with:
+          python-version: "3.12"
+          enable-cache: true
       - run: uv sync --all-groups
       - run: uv run ruff check . && uv run ruff format --check .
       - run: uv run mypy src tests
@@ -23,9 +26,10 @@ jobs:
       - run: uv run cyclonedx-py environment --output-reproducible -o dist/sbom.json
       - name: Generate Checksums
         run: |
-          cd dist && sha256sum * > SHA256SUMS
+          cd dist
+          sha256sum $(ls -1 | grep -v SHA256SUMS) > SHA256SUMS
       - name: GitHub Release
-        uses: softprops/action-gh-release@c95fe1489396fe8a9ec8740b814d003ef82f9bc3 # v2.2.1
+        uses: softprops/action-gh-release@v2
         with:
           files: |
             dist/*
