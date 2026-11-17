@@ -11,10 +11,10 @@ requires-python = ">=3.11"
 license = "Apache-2.0"
 license-files = ["LICENSE"]
 authors = [
-  { name = "Harsha Vardhan", email = "heyharva@gmail.com" },
+  { name = "HarVa (Harsha Vardhan)", email = "heyharva@gmail.com" },
 ]
 maintainers = [
-  { name = "Harsha Vardhan (Archivist Labs)", email = "heyharva@gmail.com" },
+  { name = "HarVa (Archivist Labs / HarVa Groups)", email = "heyharva@gmail.com" },
 ]
 keywords = ["pip-1", "content-addressing", "post-quantum", "ml-dsa", "slh-dsa", "canonical-text", "cli"]
 classifiers = [

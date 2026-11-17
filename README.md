@@ -276,8 +276,8 @@ print(f"Attribution: {ver_report.attribution.cls}")
 If you use `aethel` or the Permanent Ink Protocol in academic research, archival preservation, or security studies, please cite this reference implementation:
 
 ```bibtex
-@software{vardhan2026aethel,
-  author       = {Harsha Vardhan},
+@software{harva2026aethel,
+  author       = {HarVa},
   title        = {aethel-codex: Reference CLI and Python Library for the Permanent Ink Protocol (PIP-1)},
   year         = {2026},
   publisher    = {GitHub},
@@ -287,6 +287,9 @@ If you use `aethel` or the Permanent Ink Protocol in academic research, archival
 }
 ```
 
+In academic prose:
+> HarVa (2026). *aethel-codex: Reference CLI and Python Library for the Permanent Ink Protocol (PIP-1)*. Archivist Labs / HarVa Groups. Available at: https://github.com/harvatechs/aethel-pip-one
+
 See [`CITATION.cff`](CITATION.cff) for machine-readable citation metadata.
 
 ---
@@ -294,7 +297,7 @@ See [`CITATION.cff`](CITATION.cff) for machine-readable citation metadata.
 ## Project Information & Contacts
 
 - **Author & Lead Architect**:  
-  **Harsha Vardhan**  
+  **Harsha Vardhan (HarVa)**  
   Founder at HarVa Groups  
   Lead Architect at Archivist Labs (Init. of Aethel Codex)  
   Email: `heyharva@gmail.com`

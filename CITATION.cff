@@ -1,8 +1,8 @@
 cff-version: 1.2.0
 message: "If you use this software or standard implementation in your research, please cite it as below."
 authors:
-  - family-names: "Vardhan"
-    given-names: "Harsha"
+  - family-names: "HarVa"
+    given-names: "Harsha Vardhan"
     email: "heyharva@gmail.com"
     affiliation: "Archivist Labs, HarVa Groups"
 title: "aethel-codex: Reference CLI and Python Library for the Permanent Ink Protocol (PIP-1)"
@@ -20,3 +20,14 @@ keywords:
   - "content-addressing"
   - "canonical-text"
   - "merkle-tree"
+preferred-citation:
+  type: software
+  authors:
+    - family-names: "HarVa"
+      given-names: "Harsha Vardhan"
+      email: "heyharva@gmail.com"
+      affiliation: "Archivist Labs, HarVa Groups"
+  title: "aethel-codex: Reference CLI and Python Library for the Permanent Ink Protocol (PIP-1)"
+  version: 0.1.0-rc.1
+  date-released: 2026-11-17
+  url: "https://github.com/harvatechs/aethel-pip-one"
