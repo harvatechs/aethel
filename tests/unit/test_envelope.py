@@ -3,7 +3,9 @@
 import pytest
 
 from aethel_codex.envelope import (
+    parse_attestation_envelope,
     parse_envelope,
+    serialize_attestation_envelope,
     serialize_envelope,
     strict_b64decode,
     strict_b64encode,
@@ -90,3 +92,91 @@ def test_envelope_parse_rejections() -> None:
     with pytest.raises(EnvelopeError) as exc_info:
         parse_envelope(VALID_ENVELOPE.replace("\n", "\r\n").encode())
     assert exc_info.value.code == "ENVELOPE_INVALID"
+
+
+VALID_ATTESTATION = (
+    "pip-attestation 1\n"
+    "manifest pip1:m:e1bbe279695c1adc756913657cdb84c429b63d039ac5bd955b1b297aad0cd30d\n"
+    "kind rfc3161\n"
+    "proof AAAA\n"
+)
+
+
+def test_attestation_envelope_parse_and_serialize_roundtrip() -> None:
+    env = parse_attestation_envelope(VALID_ATTESTATION.encode("utf-8"))
+    assert env.kind == "rfc3161"
+    assert str(env.manifest_pid) == (
+        "pip1:m:e1bbe279695c1adc756913657cdb84c429b63d039ac5bd955b1b297aad0cd30d"
+    )
+    assert env.proof == b"\x00\x00\x00"
+    assert serialize_attestation_envelope(env) == VALID_ATTESTATION.encode("utf-8")
+    assert env.envelope_filename() == "attestations/rfc3161.att"
+
+
+def test_attestation_envelope_rejections() -> None:
+    # Size limit exceeded
+    with pytest.raises(EnvelopeError) as exc:
+        parse_attestation_envelope(b"x" * (256 * 1024 + 1))
+    assert exc.value.code == "ENVELOPE_INVALID"
+
+    # Non UTF-8
+    with pytest.raises(EnvelopeError) as exc:
+        parse_attestation_envelope(b"\xff\xfe")
+    assert exc.value.code == "ENVELOPE_INVALID"
+
+    # Carriage return
+    with pytest.raises(EnvelopeError) as exc:
+        parse_attestation_envelope(VALID_ATTESTATION.replace("\n", "\r\n").encode("utf-8"))
+    assert exc.value.code == "ENVELOPE_INVALID"
+
+    # Missing trailing newline
+    with pytest.raises(EnvelopeError) as exc:
+        parse_attestation_envelope(VALID_ATTESTATION.rstrip("\n").encode("utf-8"))
+    assert exc.value.code == "ENVELOPE_INVALID"
+
+    # Line count != 4
+    with pytest.raises(EnvelopeError) as exc:
+        parse_attestation_envelope(b"pip-attestation 1\nmanifest pip1:m:00\n")
+    assert exc.value.code == "ENVELOPE_INVALID"
+
+    # Bad magic
+    with pytest.raises(EnvelopeError) as exc:
+        parse_attestation_envelope(
+            VALID_ATTESTATION.replace("pip-attestation 1", "pip-attestation 2").encode("utf-8")
+        )
+    assert exc.value.code == "ENVELOPE_INVALID"
+
+    # Bad manifest prefix / non-manifest PID
+    bad_prefix = VALID_ATTESTATION.replace("manifest pip1:m:", "manifest pip1:b:")
+    with pytest.raises(EnvelopeError) as exc:
+        parse_attestation_envelope(bad_prefix.encode("utf-8"))
+    assert exc.value.code == "ENVELOPE_INVALID"
+
+    bad_manifest = VALID_ATTESTATION.replace("manifest ", "notmanifest ")
+    with pytest.raises(EnvelopeError) as exc:
+        parse_attestation_envelope(bad_manifest.encode("utf-8"))
+    assert exc.value.code == "ENVELOPE_INVALID"
+
+    # Bad kind line
+    bad_kind_line = VALID_ATTESTATION.replace("kind rfc3161", "type rfc3161")
+    with pytest.raises(EnvelopeError) as exc:
+        parse_attestation_envelope(bad_kind_line.encode("utf-8"))
+    assert exc.value.code == "ENVELOPE_INVALID"
+
+    # Bad kind format (uppercase / special char)
+    bad_kind_val = VALID_ATTESTATION.replace("kind rfc3161", "kind RFC3161")
+    with pytest.raises(EnvelopeError) as exc:
+        parse_attestation_envelope(bad_kind_val.encode("utf-8"))
+    assert exc.value.code == "ENVELOPE_INVALID"
+
+    # Bad proof line
+    bad_proof_line = VALID_ATTESTATION.replace("proof AAAA", "data AAAA")
+    with pytest.raises(EnvelopeError) as exc:
+        parse_attestation_envelope(bad_proof_line.encode("utf-8"))
+    assert exc.value.code == "ENVELOPE_INVALID"
+
+    # Non-canonical base64 proof
+    bad_b64 = VALID_ATTESTATION.replace("proof AAAA", "proof ZE==")
+    with pytest.raises(EnvelopeError) as exc:
+        parse_attestation_envelope(bad_b64.encode("utf-8"))
+    assert exc.value.code == "ENVELOPE_INVALID"

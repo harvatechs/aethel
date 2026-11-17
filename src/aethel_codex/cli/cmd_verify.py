@@ -35,9 +35,15 @@ def _render_human_report(report: VerifyReport, ui: UIContext) -> None:
 
     # Time line
     time_status = report.time.get("status", "SKIPPED")
-    time_desc = (
-        "no beacon and no attestations" if report.time.get("reason") == "NO_TIME_EVIDENCE" else ""
-    )
+    time_reason = report.time.get("reason", "")
+    if time_reason == "NO_TIME_EVIDENCE":
+        time_desc = "no beacon and no attestations"
+    elif time_reason == "ATT_UNVERIFIED":
+        time_desc = "attestation present, unverified"
+    elif time_reason == "BEACON_UNVERIFIED":
+        time_desc = "beacon present, unchecked"
+    else:
+        time_desc = time_reason
     sys.stdout.write(f"Time         {time_status:<12} {time_desc}\n\n")
 
     # Checks summary line

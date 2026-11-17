@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://aethel.dev/schemas/proof-v1.json",
+  "title": "AethelProofVerifyResult",
+  "type": "object",
+  "required": [
+    "schema",
+    "valid",
+    "blob",
+    "blob_length",
+    "chunk_index",
+    "path_length"
+  ],
+  "properties": {
+    "schema": {
+      "type": "string",
+      "const": "aethel.proof.verify/1"
+    },
+    "valid": {
+      "type": "boolean"
+    },
+    "blob": {
+      "type": "string",
+      "pattern": "^pip1:[mta]:[0-9a-f]{64}$"
+    },
+    "blob_length": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "chunk_index": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "path_length": {
+      "type": "integer",
+      "minimum": 0
+    }
+  },
+  "additionalProperties": false
+}

@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://aethel.dev/schemas/attest-v1.json",
+  "title": "AethelAttestAddResult",
+  "type": "object",
+  "required": [
+    "schema",
+    "manifest_id",
+    "kind",
+    "file",
+    "proof_bytes"
+  ],
+  "properties": {
+    "schema": {
+      "type": "string",
+      "const": "aethel.attest.add/1"
+    },
+    "manifest_id": {
+      "type": "string",
+      "pattern": "^pip1:m:[0-9a-f]{64}$"
+    },
+    "kind": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9-]{0,31}$"
+    },
+    "file": {
+      "type": "string"
+    },
+    "proof_bytes": {
+      "type": "integer",
+      "minimum": 0
+    }
+  },
+  "additionalProperties": false
+}

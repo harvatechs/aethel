@@ -89,6 +89,27 @@ def _dispatch_key_command(cmd: str | None, args: object, ui: UIContext) -> int |
     return None
 
 
+def _dispatch_p1_command(cmd: str | None, args: object, ui: UIContext) -> int | None:
+    """Dispatch P1 commands: revise, cite, proof, attest."""
+    if cmd == "revise":
+        from aethel_codex.cli.cmd_revise import handle_revise
+
+        return handle_revise(args, ui)  # type: ignore[arg-type]
+    if cmd == "cite":
+        from aethel_codex.cli.cmd_cite import handle_cite
+
+        return handle_cite(args, ui)  # type: ignore[arg-type]
+    if cmd == "proof":
+        from aethel_codex.cli.cmd_proof import handle_proof
+
+        return handle_proof(args, ui)  # type: ignore[arg-type]
+    if cmd == "attest":
+        from aethel_codex.cli.cmd_attest import handle_attest
+
+        return handle_attest(args, ui)  # type: ignore[arg-type]
+    return None
+
+
 def _dispatch_command(args: object, ui: UIContext) -> int:
     """Dispatch parsed args to the appropriate command handler."""
     cmd = getattr(args, "command", None)
@@ -100,6 +121,10 @@ def _dispatch_command(args: object, ui: UIContext) -> int:
     key_res = _dispatch_key_command(cmd, args, ui)
     if key_res is not None:
         return key_res
+
+    p1_res = _dispatch_p1_command(cmd, args, ui)
+    if p1_res is not None:
+        return p1_res
 
     if cmd == "canon":
         from aethel_codex.cli.cmd_canon import handle_canon

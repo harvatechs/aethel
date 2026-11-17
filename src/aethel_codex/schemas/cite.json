@@ -1,0 +1,64 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://aethel.dev/schemas/cite-v1.json",
+  "title": "AethelCiteResult",
+  "oneOf": [
+    {
+      "type": "object",
+      "required": ["schema", "uri", "target"],
+      "properties": {
+        "schema": {
+          "type": "string",
+          "const": "aethel.cite.make/1"
+        },
+        "uri": {
+          "type": "string"
+        },
+        "target": {
+          "type": "string",
+          "pattern": "^pip1:[mta]:[0-9a-f]{64}$"
+        },
+        "locator": {
+          "type": ["array", "null"],
+          "items": {
+            "type": "integer",
+            "minimum": 0
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "required": ["schema", "valid", "uri", "target", "blob_length"],
+      "properties": {
+        "schema": {
+          "type": "string",
+          "const": "aethel.cite.check/1"
+        },
+        "valid": {
+          "type": "boolean"
+        },
+        "uri": {
+          "type": "string"
+        },
+        "target": {
+          "type": "string",
+          "pattern": "^pip1:[mta]:[0-9a-f]{64}$"
+        },
+        "blob_length": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "locator": {
+          "type": ["array", "null"],
+          "items": {
+            "type": "integer",
+            "minimum": 0
+          }
+        }
+      },
+      "additionalProperties": false
+    }
+  ]
+}

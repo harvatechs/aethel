@@ -246,4 +246,109 @@ def build_parser() -> argparse.ArgumentParser:
         description="Print tool, Yellow Paper, Unicode, backend, Python, and platform versions.",
     )
 
+    # 12. revise
+    rev_parser = subparsers.add_parser(
+        "revise",
+        parents=[global_parent],
+        help="Create a revision of an existing bundle",
+        description="Build, sign, and write a revision of a parent bundle.",
+    )
+    rev_parser.add_argument("parent_bundle", help="Path to parent bundle directory")
+    rev_parser.add_argument("manuscript", help="Path to manuscript file")
+    rev_parser.add_argument("--title", help="Manuscript title override")
+    rev_parser.add_argument(
+        "--title-from-heading",
+        action="store_true",
+        help="Extract title from first # heading",
+    )
+    rev_parser.add_argument("--license", help="SPDX expression or LicenseRef-...")
+    rev_parser.add_argument("--markup", choices=["md", "tex", "txt"], help="Markup syntax")
+    rev_parser.add_argument("--lang", help="BCP 47 language tag")
+    rev_parser.add_argument(
+        "--key", action="append", default=[], help="Signing key file (repeatable)"
+    )
+    rev_parser.add_argument("--unsigned", action="store_true", help="Publish without signatures")
+    rev_parser.add_argument(
+        "--author", action="append", default=[], help="Declare author key ID (repeatable)"
+    )
+    rev_parser.add_argument(
+        "--asset", action="append", default=[], help="Attach asset file (repeatable)"
+    )
+    rev_parser.add_argument(
+        "--asset-name", action="append", default=[], help="PATH=NAME override (repeatable)"
+    )
+    rev_parser.add_argument(
+        "--asset-media", action="append", default=[], help="NAME=TYPE override (repeatable)"
+    )
+    rev_parser.add_argument(
+        "--cite", action="append", default=[], help="Add citation PID (repeatable)"
+    )
+    rev_parser.add_argument(
+        "--derivative",
+        action="append",
+        default=[],
+        help="REL:PID relationship (repeatable)",
+    )
+    rev_parser.add_argument("--beacon", help="SRC:ROUND:HEX randomness beacon")
+    rev_parser.add_argument("--out-dir", default=".", help="Target directory (default: .)")
+    rev_parser.add_argument("--dry-run", action="store_true", help="Calculate IDs without writing")
+    rev_parser.add_argument("--passphrase-file", help="Passphrase file for encrypted keys")
+    rev_parser.add_argument("--keep-assets", action="store_true", help="Copy parent assets")
+    rev_parser.add_argument("--keep-cites", action="store_true", help="Copy parent citations")
+    rev_parser.add_argument("--parents", help="Directory containing additional parent bundles")
+
+    # 13. cite
+    cite_parser = subparsers.add_parser(
+        "cite", parents=[global_parent], help="Citation URI operations"
+    )
+    cite_sub = cite_parser.add_subparsers(dest="cite_command", metavar="<subcommand>")
+
+    cite_make = cite_sub.add_parser("make", parents=[global_parent], help="Create citation URI")
+    cite_make.add_argument("target_pid", help="Target PID (pip1:m:..., pip1:t:..., pip1:a:...)")
+    cite_make.add_argument("--range", help="Byte locator range S-E (e.g. 0-100)")
+
+    cite_check = cite_sub.add_parser(
+        "check", parents=[global_parent], help="Validate citation locator"
+    )
+    cite_check.add_argument("uri", help="Citation URI")
+    cite_check.add_argument("--bundle", help="Bundle directory path")
+    cite_check.add_argument("--file", help="Target file path")
+
+    cite_show = cite_sub.add_parser("show", parents=[global_parent], help="Print cited bytes")
+    cite_show.add_argument("uri", help="Citation URI")
+    cite_show.add_argument("--bundle", required=True, help="Bundle directory path")
+
+    # 14. proof
+    proof_parser = subparsers.add_parser(
+        "proof", parents=[global_parent], help="Merkle chunk audit proof operations"
+    )
+    proof_sub = proof_parser.add_subparsers(dest="proof_command", metavar="<subcommand>")
+
+    proof_make = proof_sub.add_parser(
+        "make", parents=[global_parent], help="Generate chunk audit proof"
+    )
+    proof_make.add_argument("bundle", help="Bundle directory path")
+    proof_make.add_argument("--chunk", type=int, required=True, help="Chunk index (0-based)")
+    proof_make.add_argument("--asset", help="Asset filename (default: manuscript text)")
+    proof_make.add_argument("-o", "--output", help="Output file path")
+
+    proof_verify = proof_sub.add_parser(
+        "verify", parents=[global_parent], help="Verify chunk audit proof"
+    )
+    proof_verify.add_argument("proof_file", help="Path to chunk proof file")
+
+    # 15. attest
+    attest_parser = subparsers.add_parser(
+        "attest", parents=[global_parent], help="Attestation envelope operations"
+    )
+    attest_sub = attest_parser.add_subparsers(dest="attest_command", metavar="<subcommand>")
+
+    attest_add = attest_sub.add_parser(
+        "add", parents=[global_parent], help="Add attestation envelope"
+    )
+    attest_add.add_argument("bundle", help="Bundle directory path")
+    attest_add.add_argument("--kind", required=True, help="Attestation kind identifier")
+    attest_add.add_argument("--proof-b64", help="Base64-encoded proof data")
+    attest_add.add_argument("--proof-file", help="Path to proof file")
+
     return parser
