@@ -213,4 +213,37 @@ def build_parser() -> argparse.ArgumentParser:
     )
     insp_parser.add_argument("target", help="Bundle directory or manifest.pip path")
 
+    # 9. selftest
+    subparsers.add_parser(
+        "selftest",
+        parents=[global_parent],
+        help="Run self-tests on packaged vectors and backends",
+        description="Run packaged Yellow Paper vectors, backend checks, Unicode guard and canary.",
+    )
+
+    # 10. explain
+    explain_parser = subparsers.add_parser(
+        "explain",
+        parents=[global_parent],
+        help="Explain error codes and rejections",
+        description=(
+            "Explain any error code from specs.md: meaning, usual cause, "
+            "what to do, and Yellow Paper section."
+        ),
+    )
+    explain_parser.add_argument(
+        "code", nargs="?", help="Error code to explain (e.g. TEXT_MISMATCH)"
+    )
+    explain_parser.add_argument(
+        "--list", action="store_true", dest="list_codes", help="List all known error codes"
+    )
+
+    # 11. version
+    subparsers.add_parser(
+        "version",
+        parents=[global_parent],
+        help="Print version and environment information",
+        description="Print tool, Yellow Paper, Unicode, backend, Python, and platform versions.",
+    )
+
     return parser

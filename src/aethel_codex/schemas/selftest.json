@@ -1,0 +1,62 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://aethel.dev/schemas/selftest-v1.json",
+  "title": "AethelSelftestReport",
+  "type": "object",
+  "required": [
+    "schema",
+    "tool",
+    "passed",
+    "tests_total",
+    "tests_passed",
+    "tests_failed",
+    "results"
+  ],
+  "properties": {
+    "schema": {
+      "type": "string",
+      "const": "aethel.selftest/1"
+    },
+    "tool": {
+      "type": "object",
+      "required": ["name", "version", "profile", "yellow_paper"],
+      "properties": {
+        "name": {"type": "string"},
+        "version": {"type": "string"},
+        "profile": {"type": "string"},
+        "yellow_paper": {"type": "string"}
+      },
+      "additionalProperties": false
+    },
+    "passed": {
+      "type": "boolean"
+    },
+    "tests_total": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "tests_passed": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "tests_failed": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "results": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["name", "category", "status", "detail"],
+        "properties": {
+          "name": {"type": "string"},
+          "category": {"type": "string"},
+          "status": {"type": "string", "enum": ["PASS", "FAIL"]},
+          "detail": {"type": ["string", "null"]}
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

@@ -57,17 +57,25 @@ def _map_exception_to_exit(exc: Exception) -> tuple[int, str, str, str | None]:
     return 70, "INTERNAL", str(exc), None
 
 
-def _dispatch_command(args: object, ui: UIContext) -> int:
-    """Dispatch parsed args to the appropriate command handler."""
-    cmd = getattr(args, "command", None)
-    if cmd == "canon":
-        from aethel_codex.cli.cmd_canon import handle_canon
+def _dispatch_utility_command(cmd: str | None, args: object, ui: UIContext) -> int | None:
+    """Dispatch utility and informational commands."""
+    if cmd == "selftest":
+        from aethel_codex.cli.cmd_selftest import handle_selftest
 
-        return handle_canon(args, ui)  # type: ignore[arg-type]
-    if cmd == "id":
-        from aethel_codex.cli.cmd_id import handle_id
+        return handle_selftest(args, ui)  # type: ignore[arg-type]
+    if cmd == "explain":
+        from aethel_codex.cli.cmd_explain import handle_explain
 
-        return handle_id(args, ui)  # type: ignore[arg-type]
+        return handle_explain(args, ui)  # type: ignore[arg-type]
+    if cmd == "version":
+        from aethel_codex.cli.cmd_version import handle_version
+
+        return handle_version(args, ui)  # type: ignore[arg-type]
+    return None
+
+
+def _dispatch_key_command(cmd: str | None, args: object, ui: UIContext) -> int | None:
+    """Dispatch key management commands."""
     if cmd == "keygen":
         from aethel_codex.cli.cmd_keygen import handle_keygen
 
@@ -78,6 +86,29 @@ def _dispatch_command(args: object, ui: UIContext) -> int:
 
             return handle_key_info(args, ui)  # type: ignore[arg-type]
         return 2
+    return None
+
+
+def _dispatch_command(args: object, ui: UIContext) -> int:
+    """Dispatch parsed args to the appropriate command handler."""
+    cmd = getattr(args, "command", None)
+
+    util_res = _dispatch_utility_command(cmd, args, ui)
+    if util_res is not None:
+        return util_res
+
+    key_res = _dispatch_key_command(cmd, args, ui)
+    if key_res is not None:
+        return key_res
+
+    if cmd == "canon":
+        from aethel_codex.cli.cmd_canon import handle_canon
+
+        return handle_canon(args, ui)  # type: ignore[arg-type]
+    if cmd == "id":
+        from aethel_codex.cli.cmd_id import handle_id
+
+        return handle_id(args, ui)  # type: ignore[arg-type]
     if cmd == "publish":
         from aethel_codex.cli.cmd_publish import handle_publish
 

@@ -1,0 +1,73 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://aethel.dev/schemas/version-v1.json",
+  "title": "AethelVersionReport",
+  "type": "object",
+  "required": [
+    "schema",
+    "tool",
+    "unicode",
+    "backends",
+    "python",
+    "platform"
+  ],
+  "properties": {
+    "schema": {
+      "type": "string",
+      "const": "aethel.version/1"
+    },
+    "tool": {
+      "type": "object",
+      "required": ["name", "version", "profile", "yellow_paper"],
+      "properties": {
+        "name": {"type": "string"},
+        "version": {"type": "string"},
+        "profile": {"type": "string"},
+        "yellow_paper": {"type": "string"}
+      },
+      "additionalProperties": false
+    },
+    "unicode": {
+      "type": "object",
+      "required": ["version", "package"],
+      "properties": {
+        "version": {"type": "string"},
+        "package": {"type": "string"}
+      },
+      "additionalProperties": false
+    },
+    "backends": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["alg", "provider", "version"],
+        "properties": {
+          "alg": {"type": "string"},
+          "provider": {"type": "string"},
+          "version": {"type": "string"}
+        },
+        "additionalProperties": false
+      }
+    },
+    "python": {
+      "type": "object",
+      "required": ["version", "implementation"],
+      "properties": {
+        "version": {"type": "string"},
+        "implementation": {"type": "string"}
+      },
+      "additionalProperties": false
+    },
+    "platform": {
+      "type": "object",
+      "required": ["system", "release", "machine"],
+      "properties": {
+        "system": {"type": "string"},
+        "release": {"type": "string"},
+        "machine": {"type": "string"}
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}
