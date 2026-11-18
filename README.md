@@ -308,6 +308,7 @@ See [`CITATION.cff`](CITATION.cff) for machine-readable citation metadata.
 
 ## Normative References & Documentation
 
+- **Philosophy & Vision**: [The Archival Manifesto](docs/ecosystem/MANIFESTO.md) · [Integration Guide](docs/ecosystem/INTEGRATION_GUIDE.md) · [Launch Playbook](docs/ecosystem/LAUNCH_PLAYBOOK.md)
 - **Normative Specification**: [Yellow Paper PIP-YP-1 v1.0.0-rc.3](docs/yellow-paper/PIP-YP-1_v1.0.0-rc.3.pdf)
 - **Formal Conformance Report**: [docs/conformance-report.md](docs/conformance-report.md)
 - **Guides**: [Tutorial](docs/tutorial.md) · [Verify By Hand](docs/verify-by-hand.md) · [CLI Manual](docs/man-page.md)
