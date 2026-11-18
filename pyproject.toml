@@ -42,9 +42,9 @@ dependencies = [
 
 [project.urls]
 Homepage = "https://aethel-codex.pages.dev/"
-Source = "https://github.com/harvatechs/aethel-pip-one"
-Issues = "https://github.com/harvatechs/aethel-pip-one/issues"
-Changelog = "https://github.com/harvatechs/aethel-pip-one/blob/main/CHANGELOG.md"
+Source = "https://github.com/harvatechs/aethel"
+Issues = "https://github.com/harvatechs/aethel/issues"
+Changelog = "https://github.com/harvatechs/aethel/blob/main/CHANGELOG.md"
 
 [project.scripts]
 aethel = "aethel_codex.cli:main"

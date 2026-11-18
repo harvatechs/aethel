@@ -282,13 +282,13 @@ If you use `aethel` or the Permanent Ink Protocol in academic research, archival
   year         = {2026},
   publisher    = {GitHub},
   journal      = {GitHub repository},
-  howpublished = {\url{https://github.com/harvatechs/aethel-pip-one}},
+  howpublished = {\url{https://github.com/harvatechs/aethel}},
   version      = {0.1.0-rc.1}
 }
 ```
 
 In academic prose:
-> HarVa (2026). *aethel-codex: Reference CLI and Python Library for the Permanent Ink Protocol (PIP-1)*. Archivist Labs / HarVa Groups. Available at: https://github.com/harvatechs/aethel-pip-one
+> HarVa (2026). *aethel-codex: Reference CLI and Python Library for the Permanent Ink Protocol (PIP-1)*. Archivist Labs / HarVa Groups. Available at: https://github.com/harvatechs/aethel
 
 See [`CITATION.cff`](CITATION.cff) for machine-readable citation metadata.
 
@@ -301,7 +301,7 @@ See [`CITATION.cff`](CITATION.cff) for machine-readable citation metadata.
   Founder at HarVa Groups  
   Lead Architect at Archivist Labs (Init. of Aethel Codex)  
   Email: `heyharva@gmail.com`
-- **Repository**: [https://github.com/harvatechs/aethel-pip-one](https://github.com/harvatechs/aethel-pip-one)
+- **Repository**: [https://github.com/harvatechs/aethel](https://github.com/harvatechs/aethel)
 - **Official Documentation**: [https://aethel-codex.pages.dev/](https://aethel-codex.pages.dev/)
 
 ---

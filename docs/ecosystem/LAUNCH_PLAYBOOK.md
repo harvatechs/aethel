@@ -8,7 +8,7 @@ This playbook contains complete, pre-formatted announcements, submission texts, 
 
 > **Best Time to Post**: Tuesday or Wednesday between 07:00 AM – 09:00 AM ET (11:00 – 13:00 UTC).  
 > **Title**: `Show HN: Aethel – Post-quantum, offline-first document archival bundles`  
-> **URL**: `https://github.com/harvatechs/aethel-pip-one` (or `https://github.com/harvatechs/aethel`)
+> **URL**: `https://github.com/harvatechs/aethel`
 
 ### Post Body:
 
@@ -19,7 +19,7 @@ I’m HarVa, founder at HarVa Groups and lead architect at Archivist Labs. Over 
 
 Today, when we cite or store digital writing, we name documents by where they live on a server (URLs) rather than what they contain. Furthermore, existing digital signatures (RSA, ECDSA) rely on mathematical assumptions that will be broken by quantum computers within our lifetimes.
 
-We built `aethel` (https://github.com/harvatechs/aethel-pip-one), the reference CLI and library for the Permanent Ink Protocol (profile pip-1, defined in Yellow Paper PIP-YP-1 v1.0.0-rc.3).
+We built `aethel` (https://github.com/harvatechs/aethel), the reference CLI and library for the Permanent Ink Protocol (profile pip-1, defined in Yellow Paper PIP-YP-1 v1.0.0-rc.3).
 
 What aethel does:
 1. Canonicalizes writing to CTF-1 (strict Unicode 18.0.0 NFC, strict Unix line endings, BOM stripping, reject unassigned/surrogate code points).
@@ -30,9 +30,9 @@ What aethel does:
 
 We also include a standalone minimal verifier (`scripts/verify_minimal.py`) in under 200 lines of standard Python with zero dependencies so that bundles can be audited by hand decades from now.
 
-Code: https://github.com/harvatechs/aethel-pip-one
+Code: https://github.com/harvatechs/aethel
 Spec & Docs: https://aethel-codex.pages.dev/
-Manifesto: https://github.com/harvatechs/aethel-pip-one/blob/main/docs/ecosystem/MANIFESTO.md
+Manifesto: https://github.com/harvatechs/aethel/blob/main/docs/ecosystem/MANIFESTO.md
 
 I would love to hear feedback from cryptographers, digital archivists, and anyone who cares about long-term knowledge preservation.
 ```
@@ -48,7 +48,7 @@ I would love to hear feedback from cryptographers, digital archivists, and anyon
   Most digital documents decay within a decade—links break, servers shut down, and files are silently modified without an audit trail. 
 
   We just released `aethel`, the reference CLI and library for the Permanent Ink Protocol (PIP-1):
-  https://github.com/harvatechs/aethel-pip-one
+  https://github.com/harvatechs/aethel
 
   Some interesting technical decisions we made:
   - **Zero Network Sockets**: The entire library and CLI are strictly offline. There is no telemetry, no cloud dependency, and no blockchain.
@@ -76,7 +76,7 @@ I would love to hear feedback from cryptographers, digital archivists, and anyon
 > In the physical world, 1,000-year-old manuscripts still survive. In the digital world, web links rot in 5 years, and files are silently modified without notice.
 > 
 > Today we’re open-sourcing Aethel: a post-quantum, offline-first tool to create immortal archival document bundles. 📜🔒  
-> https://github.com/harvatechs/aethel-pip-one
+> https://github.com/harvatechs/aethel
 
 **Tweet 2 (The Problem)**:
 > When we cite digital writing today, we name documents by *where* they live (URLs), not *what* they say. When a domain expires or a server updates, the link breaks or the history is rewritten.
@@ -98,8 +98,8 @@ I would love to hear feedback from cryptographers, digital archivists, and anyon
 **Tweet 5 (Call to Action)**:
 > We’re looking for digital archivists, cryptographers, and historians to test it and help build the future of permanent preservation.
 > 
-> Read the manifesto: https://github.com/harvatechs/aethel-pip-one/blob/main/docs/ecosystem/MANIFESTO.md  
-> Star & explore: https://github.com/harvatechs/aethel-pip-one
+> Read the manifesto: https://github.com/harvatechs/aethel/blob/main/docs/ecosystem/MANIFESTO.md  
+> Star & explore: https://github.com/harvatechs/aethel
 
 ---
 
