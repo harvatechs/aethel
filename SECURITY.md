@@ -11,7 +11,7 @@ Only the latest release of `aethel-codex` receives security updates.
 ## Reporting a Vulnerability
 
 Please report security vulnerabilities through GitHub Private Vulnerability Reporting on the repository:
-https://github.com/harvatechs/aethel-pip-one/security/advisories
+https://github.com/harvatechs/aethel/security/advisories
 
 You can also reach out directly to the lead architect:
 - **Harsha Vardhan**

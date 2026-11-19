@@ -39,8 +39,8 @@ See `CITATION.cff` or use the BibTeX format provided in `README.md`.
 We use `uv` for fast, reproducible dependency management:
 
 ```bash
-git clone https://github.com/harvatechs/aethel-pip-one.git
-cd aethel-pip-one
+git clone https://github.com/harvatechs/aethel.git
+cd aethel
 uv sync --all-groups
 ```
 
@@ -78,4 +78,4 @@ For architectural questions, research collaboration, or protocol discussions:
   Founder at HarVa Groups  
   Lead Architect at Archivist Labs (Init. of Aethel Codex)  
   Email: `heyharva@gmail.com`  
-  Repository: https://github.com/harvatechs/aethel-pip-one
+  Repository: https://github.com/harvatechs/aethel
