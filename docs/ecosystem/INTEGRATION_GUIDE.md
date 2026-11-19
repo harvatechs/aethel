@@ -19,7 +19,7 @@ The Internet Archive provides permanent, non-profit hosting for digital material
 2. **Publish and Archive a Bundle**:
    ```bash
    # 1. Publish the bundle locally with aethel
-   aethel publish --text paper.md --key author_key.p8 --out bundle_paper/
+   aethel publish paper.md --key author_key.p8 --out-dir bundle_paper/
 
    # 2. Upload the bundle directory as a permanent item on Archive.org
    ia upload pip1-bundle-paper bundle_paper/ \
