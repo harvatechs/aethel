@@ -33,7 +33,7 @@ jobs:
           python-version: ${{ matrix.python }}
           enable-cache: true
       - run: uv sync --all-groups
-      - run: uv run pytest -m "not slow and not fuzz" --cov=aethel_codex --cov-branch -q
+      - run: uv run pytest -m "not slow and not fuzz" --cov=aethel_codex --cov-branch --cov-report=json:coverage.json -q
       - run: uv run python tools/check_coverage.py
       - run: uv run python tools/trace.py
       - run: uv run pytest -m conformance -q

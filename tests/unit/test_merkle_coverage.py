@@ -67,6 +67,22 @@ def test_verify_chunk_proof_empty_blob() -> None:
 
 
 def test_verify_chunk_proof_structural_none() -> None:
+    # Out of bounds chunk index m < 0 or m >= n
+    assert not merkle.verify_chunk_proof(
+        blob_length=8000,
+        m=-1,
+        chunk=b"a" * 4096,
+        path=[],
+        expected_root=b"x" * 32,
+    )
+    assert not merkle.verify_chunk_proof(
+        blob_length=8000,
+        m=5,
+        chunk=b"a" * 4096,
+        path=[],
+        expected_root=b"x" * 32,
+    )
+
     # n = 2, path is empty so root_from_path returns None
     assert not merkle.verify_chunk_proof(
         blob_length=8000,

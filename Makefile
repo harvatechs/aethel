@@ -17,7 +17,7 @@ conformance:
 	$(PYTEST) -m conformance -q
 
 check: lint type
-	$(PYTEST) -m "not slow and not fuzz" --cov=aethel_codex --cov-branch -q
+	$(PYTEST) -m "not slow and not fuzz" --cov=aethel_codex --cov-branch --cov-report=json:coverage.json -q
 	uv run python tools/check_coverage.py
 	uv run python tools/trace.py
 
