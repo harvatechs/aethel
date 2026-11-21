@@ -1,0 +1,61 @@
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## Cunningham's Law RFC Review Template
+        > *"The best way to get the right answer on the Internet is not to ask a question; it's to post the wrong answer."*
+        
+        Welcome to the technical arena. Every RFC contains a deliberately flawed baseline design. Your goal is to systematically dismantle the proposal, identify fatal assumptions, and submit superior mathematical proofs, algorithms, or test vectors.
+
+  - type: dropdown
+    id: rfc-number
+    attributes:
+      label: Target RFC
+      description: Which RFC are you challenging or amending?
+      options:
+        - "RFC-0001: Deterministic Semantic Normalization of UTF-8 Markdown & LaTeX"
+        - "RFC-0002: Decentralized QRNG Entropy Ingestion Without Centralized Oracles"
+        - "RFC-0003: Solvency Bounds for Perpetual Storage Endowments Under Kryder Stagnation"
+        - "RFC-0004: Asynchronous Post-Quantum Multi-Party State Checkpoint Attestation"
+        - "Other / New RFC Proposal"
+    validations:
+      required: true
+
+  - type: textarea
+    id: flawed-assumption
+    attributes:
+      label: Fatal Flaw / Failed Assumption
+      description: Explain exactly why the strawman baseline fails. Cite specific equations, code blocks, or edge-case inputs.
+      placeholder: "e.g., In RFC-0001 §2, Step 5 fails on currency strings like '$50 and $10'..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: counterexample
+    attributes:
+      label: Reproducible Counterexample / Attack Vector
+      description: Provide concrete code, a failing test vector, or a mathematical proof breaking the proposal.
+      placeholder: "```python\n# Minimal proof-of-concept breaking the RFC\n...```"
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposed-solution
+    attributes:
+      label: Proposed Replacement / Architecture
+      description: Present your proposed mathematical bound, alternative protocol, or reference implementation.
+      placeholder: "Formal specification or algorithmic pseudocode..."
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: criteria
+    attributes:
+      label: Protocol Conformance Check
+      options:
+        - label: "Zero network I/O during core verification (Offline Always rule)"
+          required: true
+        - label: "No unverified external trust oracles"
+          required: true
+        - label: "Post-quantum security preserved (no classical RSA/ECC dependencies)"
+          required: true
